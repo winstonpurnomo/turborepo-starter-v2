@@ -37,22 +37,4 @@
       }
     }
   },
-  "overrides": [
-    {
-      "includes": ["**/cli/**/*.ts"],
-      "linter": {
-        "rules": {
-          "performance": {
-            "useTopLevelRegex": "off"
-          },
-          "suspicious": {
-            "noConsole": "off"
-          },
-          "style": {
-            "useBlockStatements": "off"
-          }
-        }
-      }
-    }
-  ]
 }

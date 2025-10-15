@@ -1,0 +1,68 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+jobs:
+  test-template-generation:
+    name: Test Template Generation
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup pnpm
+        uses: pnpm/action-setup@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: 'pnpm'
+
+      - name: Install dependencies
+        run: pnpm install
+
+      - name: Build CLI
+        run: |
+          cd apps/cli
+          pnpm build
+
+      - name: Generate test variants
+        run: pnpm test:variants
+
+      - name: Verify base variant
+        run: |
+          test -f generated/base/package.json
+          test -f generated/base/apps/www/package.json
+          test -f generated/base/packages/ui/package.json
+          test -d generated/base/apps/www/src/routes
+          echo "✅ Base variant generated correctly"
+
+      - name: Verify base-convex variant
+        run: |
+          test -f generated/base-convex/package.json
+          test -f generated/base-convex/apps/www/CONVEX_ENABLED.md
+          test -f generated/base-convex/apps/www/.env.example
+          grep -q "VITE_CONVEX_URL" generated/base-convex/apps/www/.env.example
+          echo "✅ Base-convex variant generated correctly"
+
+      - name: Verify base-trpc variant
+        run: |
+          test -f generated/base-trpc/package.json
+          test -f generated/base-trpc/apps/www/TRPC_ENABLED.md
+          test -f generated/base-trpc/apps/www/.env.example
+          grep -q "tRPC" generated/base-trpc/apps/www/.env.example
+          echo "✅ Base-trpc variant generated correctly"
+
+      - name: Upload generated variants as artifacts
+        uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: generated-templates
+          path: generated/
+          retention-days: 7
