@@ -1,6 +1,6 @@
 {
   "name": "create-turbostart-app",
-  "version": "0.0.2",
+  "version": "0.0.3",
   "description": "Interactive CLI to scaffold TanStack Start apps with optional Convex or tRPC backends",
   "author": "Winston Purnomo",
   "license": "MIT",
