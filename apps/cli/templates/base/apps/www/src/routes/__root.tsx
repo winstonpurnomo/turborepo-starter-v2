@@ -2,8 +2,14 @@ import { SidebarInset, SidebarProvider } from "@repo/ui/components/sidebar";
 import { ToastProvider } from "@repo/ui/components/toast";
 import appCss from "@repo/ui/styles/globals.css?url";
 import { TanStackDevtools } from "@tanstack/react-devtools";
-import { createRootRoute, HeadContent, Scripts } from "@tanstack/react-router";
+import {
+  createRootRoute,
+  HeadContent,
+  redirect,
+  Scripts,
+} from "@tanstack/react-router";
 import { TanStackRouterDevtoolsPanel } from "@tanstack/react-router-devtools";
+import { getAuth, getSignInUrl } from "@workos/authkit-tanstack-react-start";
 import { AuthKitProvider } from "@workos/authkit-tanstack-react-start/client";
 import { AppSidebar } from "@/components/sidebar";
 
@@ -28,7 +34,18 @@ export const Route = createRootRoute({
       },
     ],
   }),
+  loader: async ({ location }) => {
+    const { user } = await getAuth();
 
+    if (!user) {
+      const signInUrl = await getSignInUrl({
+        data: { returnPathname: location.pathname },
+      });
+      throw redirect({ href: signInUrl });
+    }
+
+    return { user };
+  },
   shellComponent: RootDocument,
 });
 
