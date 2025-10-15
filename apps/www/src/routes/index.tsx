@@ -1,6 +1,6 @@
 import { Button } from "@repo/ui/components/button";
+import { useToast } from "@repo/ui/hooks/use-toast";
 import { createFileRoute } from "@tanstack/react-router";
-
 import {
   Route as RouteIcon,
   Server,
@@ -15,6 +15,8 @@ export const Route = createFileRoute("/")({
 });
 
 function App() {
+  const toast = useToast();
+
   const features = [
     {
       icon: <Zap className="h-12 w-12 text-cyan-400" />,
@@ -81,7 +83,23 @@ function App() {
             safety.
           </p>
           <div className="flex flex-col items-center gap-4">
-            <Button>Documentation</Button>
+            <Button
+              onClick={() => {
+                toast.add({
+                  title: "Documentation link clicked",
+                  description:
+                    "You can now click the button below to go to the documentation.",
+                  actionProps: {
+                    children: "Hello",
+                    onClick: () => {
+                      toast.add({ title: "Not working" });
+                    },
+                  },
+                });
+              }}
+            >
+              Documentation
+            </Button>
             <a
               className="rounded-lg bg-cyan-500 px-8 py-3 font-semibold text-white shadow-cyan-500/50 shadow-lg transition-colors hover:bg-cyan-600"
               href="https://tanstack.com/start"
