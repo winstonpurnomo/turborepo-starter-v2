@@ -266,3 +266,7 @@
     @apply bg-background text-foreground;
   }
 }
+
+.root {
+  isolation: isolate;
+}
