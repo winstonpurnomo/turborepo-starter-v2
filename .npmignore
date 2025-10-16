@@ -1,0 +1,19 @@
+# Source files
+index.ts
+index.test.ts
+*.test.ts
+
+# Config files
+.github
+.vscode
+tsconfig.json
+biome.json
+bun.lockb
+
+# Test artifacts
+test-generated
+
+# Development
+node_modules
+.env
+.env.local
