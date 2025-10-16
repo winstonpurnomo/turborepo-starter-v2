@@ -223,13 +223,20 @@ async function createEnvTemplate(targetPath: string, backend: Backend) {
     "",
     "WORKOS_REDIRECT_URI=''",
     "WORKOS_API_KEY=''",
-    "VITE_WORKOS_CLIENT_ID=''",
+    "WORKOS_CLIENT_ID=''",
     "VITE_WORKOS_API_HOSTNAME=''",
     "WORKOS_COOKIE_PASSWORD=''",
   ];
 
   if (backend === "convex") {
-    lines.push("", "# Convex", "VITE_CONVEX_URL=''");
+    lines.push(
+      "",
+      "# Convex",
+      "",
+      "VITE_CONVEX_DEPLOYMENT=''",
+      "",
+      "VITE_CONVEX_URL=''"
+    );
   }
   if (backend === "trpc") {
     lines.push("", "# tRPC", "# No environment variables needed for tRPC");

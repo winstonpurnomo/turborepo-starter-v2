@@ -1,0 +1,16 @@
+{
+  "name": "@repo/backend",
+  "scripts": {
+    "dev": "convex dev",
+    "setup": "convex dev --until-success"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "convex": "^1.28.0"
+  },
+  "devDependencies": {
+    "@types/node": "^24.7.2",
+    "typescript": "5.9.2"
+  }
+}
