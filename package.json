@@ -1,22 +1,27 @@
 {
-  "name": "2025-10-14-turborepo-template",
-  "private": true,
+  "name": "create-turbostart-app",
+  "version": "1.0.0",
+  "type": "module",
+  "bin": {
+    "create-turbostart-app": "dist/create-turbostart-app"
+  },
   "scripts": {
-    "build": "turbo run build",
-    "dev": "turbo run dev",
-    "lint": "turbo run lint",
+    "dev": "bun run index.ts",
+    "test": "bun test",
+    "build": "bun build src/create-turbostart-app.ts --compile --outfile dist/create-turbostart-app",
     "format": "prettier --write \"**/*.{ts,tsx,md}\"",
-    "check-types": "turbo run check-types",
-    "test:variants": "./scripts/generate-test-variants.sh"
+    "lint": "biome lint ."
+  },
+  "dependencies": {
+    "@clack/prompts": "^0.11.0"
   },
   "devDependencies": {
     "@biomejs/biome": "2.2.6",
-    "turbo": "^2.5.8",
-    "typescript": "5.9.2",
-    "ultracite": "5.6.4"
+    "prettier": "^3.3.3",
+    "typescript": "5.9.2"
   },
-  "packageManager": "pnpm@9.0.0",
   "engines": {
-    "node": ">=18"
-  }
+    "bun": ">=1.1.0"
+  },
+  "private": false
 }

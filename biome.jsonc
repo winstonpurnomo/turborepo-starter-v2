@@ -39,7 +39,7 @@
   },
   "overrides": [
     {
-      "includes": ["**/cli/**/*.ts"],
+      "includes": ["index.ts"],
       "linter": {
         "rules": {
           "performance": {
