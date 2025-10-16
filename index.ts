@@ -125,7 +125,8 @@ main().catch((error) => {
 });
 
 async function generateProject({ projectName, backend }: ProjectOptions) {
-  const templateRoot = resolve(__dirname, "./templates");
+  // Templates are at the package root, one level up from dist/
+  const templateRoot = resolve(__dirname, "../templates");
   const basePath = join(templateRoot, "base");
   const targetPath = resolve(process.cwd(), projectName);
 
