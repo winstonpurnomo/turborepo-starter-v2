@@ -1,3 +1,4 @@
+#!/usr/bin/env node
 /** biome-ignore-all lint/performance/noNamespaceImport: recommended */
 import {
   copyFile,
@@ -27,7 +28,7 @@ function showHelp() {
 🚀 Create TurboStart App
 
 Usage:
-  bun run index.ts [options]
+  pnpm create turbostart-app [options]
 
 Options:
   -n, --name <name>       Project name (lowercase alphanumeric with hyphens)
@@ -36,11 +37,11 @@ Options:
 
 Examples:
   # Interactive mode
-  bun run index.ts
+  pnpm create turbostart-app
 
   # Non-interactive with flags
-  bun run index.ts --name my-app --backend convex
-  bun run index.ts -n my-trpc-app -b trpc
+  pnpm create turbostart-app --name my-app --backend convex
+  pnpm create turbostart-app -n my-trpc-app -b trpc
 `);
 }
 

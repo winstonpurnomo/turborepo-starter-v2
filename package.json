@@ -1,15 +1,37 @@
 {
   "name": "create-turbostart-app",
-  "version": "1.0.0",
+  "version": "0.1.0",
   "type": "module",
-  "bin": {
-    "create-turbostart-app": "dist/create-turbostart-app"
+  "description": "🚀 Create TurboStart App - A modern monorepo template with Bun and pnpm",
+  "author": "Winston Purnomo",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/winstonpurnomo/turborepo-starter-v2"
   },
+  "keywords": [
+    "create",
+    "cli",
+    "template",
+    "monorepo",
+    "turborepo",
+    "bun",
+    "pnpm",
+    "vite",
+    "react"
+  ],
+  "bin": {
+    "create-turbostart-app": "./dist/index.js"
+  },
+  "files": [
+    "dist",
+    "templates"
+  ],
   "scripts": {
     "dev": "bun run index.ts",
     "test": "bun test",
-    "build": "bun build src/create-turbostart-app.ts --compile --outfile dist/create-turbostart-app",
-    "format": "prettier --write \"**/*.{ts,tsx,md}\"",
+    "build": "bun build index.ts --outdir dist --target node --format esm",
+    "prepublishOnly": "bun run build",
     "lint": "biome lint ."
   },
   "dependencies": {
@@ -17,11 +39,9 @@
   },
   "devDependencies": {
     "@biomejs/biome": "2.2.6",
-    "prettier": "^3.3.3",
     "typescript": "5.9.2"
   },
   "engines": {
-    "bun": ">=1.1.0"
-  },
-  "private": false
+    "node": ">=18.0.0"
+  }
 }
