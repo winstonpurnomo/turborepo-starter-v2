@@ -125,8 +125,12 @@ main().catch((error) => {
 });
 
 async function generateProject({ projectName, backend }: ProjectOptions) {
-  // Templates are at the package root, one level up from dist/
-  const templateRoot = resolve(__dirname, "../templates");
+  // Templates are at the package root
+  // When running from dist/index.js: __dirname is dist/, so ../templates works
+  // When running from index.ts (dev/test): __dirname is root, so ./templates works
+  const templateRoot = __dirname.endsWith('dist')
+    ? resolve(__dirname, "../templates")
+    : resolve(__dirname, "./templates");
   const basePath = join(templateRoot, "base");
   const targetPath = resolve(process.cwd(), projectName);
 
