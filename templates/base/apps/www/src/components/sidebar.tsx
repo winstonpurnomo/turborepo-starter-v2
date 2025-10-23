@@ -13,8 +13,11 @@ import {
   SidebarMenu,
   SidebarMenuButton,
 } from "@repo/ui/components/sidebar";
+import { Link } from "@tanstack/react-router";
+import { useAuth } from "@workos/authkit-tanstack-react-start/client";
 
 export function AppSidebar() {
+  const { signOut } = useAuth();
   return (
     <Sidebar collapsible="icon" variant="inset">
       <SidebarHeader>
@@ -35,8 +38,16 @@ export function AppSidebar() {
             <DropdownMenuPositioner>
               <DropdownMenuContent>
                 <DropdownMenuGroup>
-                  <DropdownMenuLabel>Account</DropdownMenuLabel>
-                  <DropdownMenuItem>Profile</DropdownMenuItem>
+                  <DropdownMenuLabel>You</DropdownMenuLabel>
+                  <Link to="/account">
+                    <DropdownMenuItem>Profile</DropdownMenuItem>
+                  </Link>
+                  <Link to="/switch-organization">
+                    <DropdownMenuItem>Switch Organization</DropdownMenuItem>
+                  </Link>
+                  <DropdownMenuItem onClick={() => signOut()}>
+                    Logout
+                  </DropdownMenuItem>
                 </DropdownMenuGroup>
               </DropdownMenuContent>
             </DropdownMenuPositioner>

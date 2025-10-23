@@ -1,10 +1,5 @@
 import type { ConvexQueryClient } from "@convex-dev/react-query";
-import {
-  SidebarInset,
-  SidebarProvider,
-  SidebarRail,
-  SidebarTrigger,
-} from "@repo/ui/components/sidebar";
+import { SidebarProvider } from "@repo/ui/components/sidebar";
 import { ToastProvider } from "@repo/ui/components/toast";
 import appCss from "@repo/ui/styles/globals.css?url";
 import { TanStackDevtools } from "@tanstack/react-devtools";
@@ -12,21 +7,22 @@ import type { QueryClient } from "@tanstack/react-query";
 import {
   createRootRouteWithContext,
   HeadContent,
+  Outlet,
   redirect,
   Scripts,
 } from "@tanstack/react-router";
 import { TanStackRouterDevtoolsPanel } from "@tanstack/react-router-devtools";
 import { getAuth, getSignInUrl } from "@workos/authkit-tanstack-react-start";
+import { AuthKitProvider } from "@workos/authkit-tanstack-react-start/client";
 import { Authenticated } from "convex/react";
 import { ConvexClientProvider } from "@/components/convex";
-import { AppSidebar } from "@/components/sidebar";
 
-type MyRouterContext = {
+interface RouterContext {
   queryClient: QueryClient;
   convexQueryClient: ConvexQueryClient;
-};
+}
 
-export const Route = createRootRouteWithContext<MyRouterContext>()({
+export const Route = createRootRouteWithContext<RouterContext>()({
   head: () => ({
     meta: [
       { charSet: "utf-8" },
@@ -35,48 +31,40 @@ export const Route = createRootRouteWithContext<MyRouterContext>()({
     ],
     links: [{ rel: "stylesheet", href: appCss }],
   }),
-  loader: async () => {
+  loader: async ({ location }) => {
     const { user } = await getAuth();
 
     if (!user) {
-      const signInUrl = await getSignInUrl({});
+      const signInUrl = await getSignInUrl({
+        data: { returnPathname: location.pathname },
+      });
       throw redirect({ href: signInUrl });
     }
 
     return { user };
   },
-  shellComponent: RootDocument,
+  component: RootDocument,
 });
 
-function RootDocument({ children }: { children: React.ReactNode }) {
+function RootDocument() {
   const { convexQueryClient } = Route.useRouteContext();
   return (
     <html lang="en">
       <head>
         <HeadContent />
       </head>
-      <body className="min-h-screen bg-muted text-foreground">
-        <div className="root flex min-h-screen">
+      <body className="flex h-screen flex-col bg-muted text-foreground">
+        <div className="root flex min-h-0 flex-1">
           <ToastProvider timeout={2000}>
-            <ConvexClientProvider convex={convexQueryClient.convexClient}>
-              <Authenticated>
-                <SidebarProvider>
-                  <AppSidebar />
-
-                  <div className="flex flex-1 flex-col p-4">
-                    <header className="mb-2 flex shrink-0 items-center gap-3 rounded-md px-4 py-2">
-                      <SidebarTrigger />
-                      <h1 className="text-sm">Page Title</h1>
-                    </header>
-
-                    <SidebarInset className="flex-1 rounded-xl bg-background shadow-sm">
-                      <SidebarRail />
-                      <div className="overflow-auto p-6">{children}</div>
-                    </SidebarInset>
-                  </div>
-                </SidebarProvider>
-              </Authenticated>
-            </ConvexClientProvider>
+            <AuthKitProvider>
+              <ConvexClientProvider convex={convexQueryClient.convexClient}>
+                <Authenticated>
+                  <SidebarProvider>
+                    <Outlet />
+                  </SidebarProvider>
+                </Authenticated>
+              </ConvexClientProvider>
+            </AuthKitProvider>
           </ToastProvider>
 
           <TanStackDevtools
