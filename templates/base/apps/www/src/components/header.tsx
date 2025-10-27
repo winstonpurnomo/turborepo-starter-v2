@@ -139,7 +139,7 @@ function HeaderRoot() {
         className="flex min-w-0 flex-1 items-center gap-2 py-4"
         data-title-section
       >
-        <SidebarTrigger className="flex-shrink-0 p-2 text-lg text-muted-foreground transition-colors hover:text-foreground" />
+        <SidebarTrigger className="shrink-0 p-2 text-lg text-muted-foreground transition-colors hover:text-foreground" />
         {title ? (
           <>
             <Separator className="h-6 opacity-30" orientation="vertical" />
@@ -155,7 +155,7 @@ function HeaderRoot() {
         )}
       </div>
 
-      <div className="flex flex-shrink-0 items-center gap-2">
+      <div className="flex shrink-0 items-center gap-2">
         {visibleActions.map(renderAction)}
 
         {overflowActions.length > 0 && (

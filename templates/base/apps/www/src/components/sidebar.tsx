@@ -1,4 +1,13 @@
 import {
+  CaretUpDownIcon,
+  GlobeHemisphereWestIcon,
+} from "@phosphor-icons/react";
+import {
+  Avatar,
+  AvatarFallback,
+  AvatarImage,
+} from "@repo/ui/components/avatar";
+import {
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuGroup,
@@ -9,6 +18,8 @@ import {
 } from "@repo/ui/components/dropdown-menu";
 import {
   Sidebar,
+  SidebarContent,
+  SidebarGroup,
   SidebarHeader,
   SidebarMenu,
   SidebarMenuButton,
@@ -16,8 +27,17 @@ import {
 import { Link } from "@tanstack/react-router";
 import { useAuth } from "@workos/authkit-tanstack-react-start/client";
 
+const sidebarItems = [
+  {
+    name: "Home",
+    href: "/",
+    icon: GlobeHemisphereWestIcon,
+  },
+];
+
 export function AppSidebar() {
-  const { signOut } = useAuth();
+  const { signOut, user } = useAuth();
+
   return (
     <Sidebar collapsible="icon" variant="inset">
       <SidebarHeader>
@@ -26,12 +46,18 @@ export function AppSidebar() {
             <DropdownMenuTrigger
               render={(props) => (
                 <SidebarMenuButton {...props} size="lg">
-                  <div className="grid flex-1 text-left leading-tight">
-                    <span className="truncate font-medium">Hello</span>
-                    <span className="truncate text-muted-foreground text-sm">
-                      Welcome back
-                    </span>
+                  <Avatar>
+                    <AvatarImage
+                      alt={`${user?.firstName} ${user?.lastName}`}
+                      src={user?.profilePictureUrl ?? "/avatar.webp"}
+                    />
+                    <AvatarFallback className="rounded-lg">User</AvatarFallback>
+                  </Avatar>
+                  <div className="grid flex-1 text-left text-sm leading-tight">
+                    <span className="truncate font-medium">{`${user?.firstName} ${user?.lastName}`}</span>
+                    <span className="truncate text-xs">{user?.email}</span>
                   </div>
+                  <CaretUpDownIcon />
                 </SidebarMenuButton>
               )}
             />
@@ -54,6 +80,22 @@ export function AppSidebar() {
           </DropdownMenu>
         </SidebarMenu>
       </SidebarHeader>
+      <SidebarContent>
+        <SidebarGroup>
+          {sidebarItems.map((item) => (
+            <Link key={item.name} to={item.href}>
+              {({ isActive }) => (
+                <SidebarMenu>
+                  <SidebarMenuButton isActive={isActive}>
+                    <item.icon className="h-6 w-6" />
+                    <span className="ml-2">{item.name}</span>
+                  </SidebarMenuButton>
+                </SidebarMenu>
+              )}
+            </Link>
+          ))}
+        </SidebarGroup>
+      </SidebarContent>
     </Sidebar>
   );
 }

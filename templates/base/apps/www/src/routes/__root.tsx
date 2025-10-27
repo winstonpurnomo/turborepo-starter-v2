@@ -12,6 +12,36 @@ import {
 import { TanStackRouterDevtoolsPanel } from "@tanstack/react-router-devtools";
 import { getAuth, getSignInUrl } from "@workos/authkit-tanstack-react-start";
 import { AuthKitProvider } from "@workos/authkit-tanstack-react-start/client";
+import { PendingComponent } from "@/components/pending-component";
+
+function NotFoundComponent() {
+  return (
+    <div className="flex h-screen w-screen items-center justify-center">
+      <div className="flex flex-col items-center gap-4 text-center">
+        <h1 className="font-bold text-4xl">404</h1>
+        <p className="text-muted-foreground">Page not found</p>
+      </div>
+    </div>
+  );
+}
+
+function ErrorComponent({ error }: { error: Error }) {
+  return (
+    <div className="flex h-screen w-screen items-center justify-center p-4">
+      <div className="flex w-full max-w-md flex-col gap-4 rounded-lg border border-destructive/50 bg-destructive/10 p-6">
+        <h1 className="font-bold text-destructive text-xl">Error</h1>
+        <p className="text-foreground text-sm">{error.message}</p>
+        <button
+          className="mt-2 rounded-md bg-primary px-4 py-2 text-primary-foreground text-sm hover:bg-primary/90"
+          onClick={() => window.location.reload()}
+          type="button"
+        >
+          Reload Page
+        </button>
+      </div>
+    </div>
+  );
+}
 
 export const Route = createRootRoute({
   head: () => ({
@@ -35,6 +65,9 @@ export const Route = createRootRoute({
     return { user };
   },
   component: RootDocument,
+  pendingComponent: PendingComponent,
+  notFoundComponent: NotFoundComponent,
+  errorComponent: ErrorComponent,
 });
 
 function RootDocument() {
