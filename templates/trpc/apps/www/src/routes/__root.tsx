@@ -72,6 +72,8 @@ export const Route = createRootRouteWithContext<RouterContext>()({
     return { user };
   },
   component: RootDocument,
+  errorComponent: ErrorComponent,
+  notFoundComponent: NotFoundComponent,
 });
 
 function RootDocument() {

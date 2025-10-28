@@ -1,6 +1,6 @@
 {
   "$schema": "./node_modules/@biomejs/biome/configuration_schema.json",
-  "extends": ["ultracite"],
+  "extends": ["ultracite/core", "ultracite/react"],
   "linter": {
    "rules": {
       "recommended": true,
@@ -19,8 +19,7 @@
             "attributes": ["className"],
             "functions": ["clsx", "cva", "tw", "twMerge", "cn", "twJoin", "tv"]
           }
-        },
-        "useConsistentTypeDefinitions": "off"
+        }
       },
       "style": {
         "noParameterAssign": "error",
@@ -33,8 +32,8 @@
         "useNumberNamespace": "error",
         "noInferrableTypes": "error",
         "noUselessElse": "error",
-        "noHeadElement": "off"
+        "useConsistentTypeDefinitions": "off"
       }
     }
-  },
+  }
 }
