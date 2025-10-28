@@ -26,6 +26,37 @@ jobs:
       - name: Run tests
         run: bun test
 
+      - name: Setup pnpm
+        uses: pnpm/action-setup@v4
+        with:
+          version: 9
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      - name: Validate generated templates
+        run: |
+          echo "Validating generated templates..."
+          for dir in test-generated/*/; do
+            if [ -d "$dir" ]; then
+              project=$(basename "$dir")
+              echo ""
+              echo "📦 Validating $project..."
+              cd "$dir"
+
+              echo "Installing dependencies..."
+              pnpm install --frozen-lockfile
+
+              echo "Running type check..."
+              pnpm check-types
+
+              cd "$GITHUB_WORKSPACE"
+              echo "✅ $project validated successfully"
+            fi
+          done
+
       - name: Upload test artifacts
         uses: actions/upload-artifact@v4
         if: failure()

@@ -28,8 +28,7 @@ build
 dist
 
 # Generated test variants
-generated
-
+_generated
 
 # Debug
 npm-debug.log*

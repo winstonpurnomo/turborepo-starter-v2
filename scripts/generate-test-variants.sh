@@ -8,7 +8,7 @@ set -e
 
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 REPO_ROOT="$(cd "$SCRIPT_DIR/.." && pwd)"
-GENERATED_DIR="$REPO_ROOT/generated"
+GENERATED_DIR="$REPO_ROOT/_generated"
 
 echo "🧪 Generating test variants..."
 echo "Repository root: $REPO_ROOT"
