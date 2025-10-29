@@ -6,12 +6,10 @@ import {
   DropdownMenuItem,
   DropdownMenuTrigger,
 } from "@repo/ui/components/dropdown-menu";
-import { Separator } from "@repo/ui/components/separator";
 import { SidebarTrigger } from "@repo/ui/components/sidebar";
 import { Skeleton } from "@repo/ui/components/skeleton";
 import { MoreHorizontal } from "lucide-react";
 import {
-  Children,
   createContext,
   Fragment,
   type MouseEventHandler,
@@ -107,7 +105,6 @@ function HeaderRoot() {
       );
     }
 
-    const childrenArray = Children.toArray(action.children);
     return (
       <Button
         className="flex items-center gap-2"
@@ -117,45 +114,24 @@ function HeaderRoot() {
         size={action.size}
         variant={action.variant}
       >
-        {childrenArray.map((child, index) =>
-          typeof child === "string" ? (
-            <span className="hidden sm:inline" key={index}>
-              {child}
-            </span>
-          ) : (
-            child
-          )
-        )}
+        {action.children}
       </Button>
     );
   };
 
   return (
     <header
-      className="mb-2 flex h-24 w-full items-center gap-3 rounded-md bg-background px-4 py-2"
+      className="mb-2 flex shrink-0 items-center gap-3 rounded-md px-4 py-2"
       ref={headerRef}
     >
-      <div
-        className="flex min-w-0 flex-1 items-center gap-2 py-4"
-        data-title-section
-      >
-        <SidebarTrigger className="shrink-0 p-2 text-lg text-muted-foreground transition-colors hover:text-foreground" />
-        {title ? (
-          <>
-            <Separator className="h-6 opacity-30" orientation="vertical" />
-            <h1 className="min-w-0 truncate p-2 font-medium text-lg tracking-tight">
-              {title}
-            </h1>
-          </>
-        ) : (
-          <>
-            <Separator className="h-6 opacity-30" orientation="vertical" />
-            <Skeleton className="h-6 w-32" />
-          </>
-        )}
-      </div>
+      <SidebarTrigger />
+      {title ? (
+        <h1 className="font-bold text-lg">{title}</h1>
+      ) : (
+        <Skeleton className="h-6 w-32" />
+      )}
 
-      <div className="flex shrink-0 items-center gap-2">
+      <div className="ml-auto flex shrink-0 items-center gap-2">
         {visibleActions.map(renderAction)}
 
         {overflowActions.length > 0 && (

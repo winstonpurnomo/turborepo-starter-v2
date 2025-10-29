@@ -1,12 +1,8 @@
-import {
-  SidebarInset,
-  SidebarRail,
-  SidebarTrigger,
-} from "@repo/ui/components/sidebar";
+import { SidebarInset, SidebarRail } from "@repo/ui/components/sidebar";
 import { createFileRoute, Outlet, redirect } from "@tanstack/react-router";
 import { useAuth } from "@workos/authkit-tanstack-react-start/client";
 import { useEffect } from "react";
-import { Provider as HeaderProvider, useTitle } from "@/components/header";
+import { Provider as HeaderProvider, HeaderRoot } from "@/components/header";
 import { PendingComponent } from "@/components/pending-component";
 import { AppSidebar } from "@/components/sidebar";
 
@@ -14,17 +10,6 @@ export const Route = createFileRoute("/_app")({
   component: RouteComponent,
   pendingComponent: PendingComponent,
 });
-
-function HeaderBar() {
-  const { title } = useTitle();
-
-  return (
-    <header className="mb-2 flex shrink-0 items-center gap-3 rounded-md px-4 py-2">
-      <SidebarTrigger />
-      <h1 className="font-bold text-lg">{title}</h1>
-    </header>
-  );
-}
 
 function RouteComponent() {
   const { organizationId, loading } = useAuth();
@@ -44,7 +29,7 @@ function RouteComponent() {
 
       <div className="m-4 my-4 flex min-h-0 min-w-0 flex-1 flex-col sm:mx-4 md:ml-0 md:pl-0">
         <HeaderProvider>
-          <HeaderBar />
+          <HeaderRoot />
 
           <SidebarInset className="flex min-h-0 min-w-0 flex-1 overflow-hidden rounded-xl bg-background shadow-sm">
             <SidebarRail />
