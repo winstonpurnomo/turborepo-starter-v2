@@ -40,7 +40,8 @@
   },
   "devDependencies": {
     "@biomejs/biome": "2.2.6",
-    "typescript": "5.9.3"
+    "typescript": "5.9.3",
+    "ultracite": "6.0.5"
   },
   "engines": {
     "node": ">=18.0.0"
