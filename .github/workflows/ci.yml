@@ -34,7 +34,7 @@ jobs:
         run: bun install
 
       - name: Run biome ci
-        run: biome ci .
+        run: NODE_PATH=./node_modules biome ci .
 
   test-template-generation:
     name: Test Template Generation
