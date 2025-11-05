@@ -15,6 +15,7 @@ import { TanStackRouterDevtoolsPanel } from "@tanstack/react-router-devtools";
 import type { TRPCOptionsProxy } from "@trpc/tanstack-react-query";
 import { getAuth, getSignInUrl } from "@workos/authkit-tanstack-react-start";
 import { AuthKitProvider } from "@workos/authkit-tanstack-react-start/client";
+import { ThemeProvider } from "tanstack-theme-kit";
 
 interface RouterContext {
   queryClient: QueryClient;
@@ -84,13 +85,15 @@ function RootDocument() {
       </head>
       <body className="flex h-screen flex-col bg-muted text-foreground">
         <div className="root flex min-h-0 flex-1">
-          <ToastProvider timeout={2000}>
-            <AuthKitProvider>
-              <SidebarProvider>
-                <Outlet />
-              </SidebarProvider>
-            </AuthKitProvider>
-          </ToastProvider>
+          <ThemeProvider>
+            <ToastProvider timeout={2000}>
+              <AuthKitProvider>
+                <SidebarProvider>
+                  <Outlet />
+                </SidebarProvider>
+              </AuthKitProvider>
+            </ToastProvider>
+          </ThemeProvider>
 
           <TanStackDevtools
             config={{ position: "bottom-right" }}

@@ -2,7 +2,6 @@
 "use client";
 
 import {
-  AuthKitProvider,
   useAccessToken,
   useAuth,
 } from "@workos/authkit-tanstack-react-start/client";
@@ -17,11 +16,9 @@ export function ConvexClientProvider({
   children: ReactNode;
 }) {
   return (
-    <AuthKitProvider>
-      <ConvexProviderWithAuth client={convex} useAuth={useAuthFromAuthKit}>
-        {children}
-      </ConvexProviderWithAuth>
-    </AuthKitProvider>
+    <ConvexProviderWithAuth client={convex} useAuth={useAuthFromAuthKit}>
+      {children}
+    </ConvexProviderWithAuth>
   );
 }
 

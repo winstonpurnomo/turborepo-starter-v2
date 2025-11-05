@@ -7,7 +7,7 @@ import { setupRouterSsrQueryIntegration } from "@tanstack/react-router-ssr-query
 import { routeTree } from "./routeTree.gen";
 
 // Create a new router instance
-export const getRouter = () => {
+export function getRouter() {
   const convexUrl = import.meta.env.VITE_CONVEX_URL;
   if (!convexUrl) {
     throw new Error("VITE_CONVEX_URL is not defined");
@@ -35,4 +35,4 @@ export const getRouter = () => {
   });
 
   return router;
-};
+}

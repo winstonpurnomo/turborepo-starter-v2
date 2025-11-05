@@ -2,8 +2,9 @@ import { SidebarProvider } from "@repo/ui/components/sidebar";
 import { ToastProvider } from "@repo/ui/components/toast";
 import appCss from "@repo/ui/styles/globals.css?url";
 import { TanStackDevtools } from "@tanstack/react-devtools";
+import { type QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import {
-  createRootRoute,
+  createRootRouteWithContext,
   HeadContent,
   Outlet,
   redirect,
@@ -12,6 +13,7 @@ import {
 import { TanStackRouterDevtoolsPanel } from "@tanstack/react-router-devtools";
 import { getAuth, getSignInUrl } from "@workos/authkit-tanstack-react-start";
 import { AuthKitProvider } from "@workos/authkit-tanstack-react-start/client";
+import { ThemeProvider } from "tanstack-theme-kit";
 import { PendingComponent } from "@/components/pending-component";
 
 function NotFoundComponent() {
@@ -43,7 +45,11 @@ function ErrorComponent({ error }: { error: Error }) {
   );
 }
 
-export const Route = createRootRoute({
+interface RouterContext {
+  queryClient: QueryClient;
+}
+
+export const Route = createRootRouteWithContext<RouterContext>()({
   head: () => ({
     meta: [
       { charSet: "utf-8" },
@@ -71,6 +77,7 @@ export const Route = createRootRoute({
 });
 
 function RootDocument() {
+  const { queryClient } = Route.useRouteContext();
   return (
     <html lang="en">
       <head>
@@ -78,13 +85,17 @@ function RootDocument() {
       </head>
       <body className="flex h-screen flex-col bg-muted text-foreground">
         <div className="root flex min-h-0 flex-1">
-          <ToastProvider timeout={2000}>
-            <AuthKitProvider>
-              <SidebarProvider>
-                <Outlet />
-              </SidebarProvider>
-            </AuthKitProvider>
-          </ToastProvider>
+          <ThemeProvider>
+            <ToastProvider timeout={2000}>
+              <AuthKitProvider>
+                <QueryClientProvider client={queryClient}>
+                  <SidebarProvider>
+                    <Outlet />
+                  </SidebarProvider>
+                </QueryClientProvider>
+              </AuthKitProvider>
+            </ToastProvider>
+          </ThemeProvider>
 
           <TanStackDevtools
             config={{ position: "bottom-right" }}

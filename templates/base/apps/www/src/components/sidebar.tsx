@@ -1,6 +1,8 @@
 import {
   CaretUpDownIcon,
   GlobeHemisphereWestIcon,
+  MoonIcon,
+  SunIcon,
 } from "@phosphor-icons/react";
 import {
   Avatar,
@@ -24,8 +26,10 @@ import {
   SidebarMenu,
   SidebarMenuButton,
 } from "@repo/ui/components/sidebar";
+import { cn } from "@repo/ui/lib/utils";
 import { Link } from "@tanstack/react-router";
 import { useAuth } from "@workos/authkit-tanstack-react-start/client";
+import { useTheme } from "tanstack-theme-kit";
 
 const sidebarItems = [
   {
@@ -37,6 +41,7 @@ const sidebarItems = [
 
 export function AppSidebar() {
   const { signOut, user } = useAuth();
+  const { theme, setTheme } = useTheme();
 
   return (
     <Sidebar collapsible="icon" variant="inset">
@@ -73,6 +78,55 @@ export function AppSidebar() {
                   </Link>
                   <DropdownMenuItem onClick={() => signOut()}>
                     Logout
+                  </DropdownMenuItem>
+                  <DropdownMenuItem>
+                    <DropdownMenuItem
+                      className="flex items-center justify-between gap-4 focus:bg-accent/60"
+                      onSelect={(e) => {
+                        e.preventDefault(); // keep menu open behavior consistent
+                        setTheme(theme === "light" ? "dark" : "light");
+                      }}
+                    >
+                      <span className="text-sm">Theme</span>
+
+                      <button
+                        aria-label="Toggle theme"
+                        aria-pressed={theme === "dark"}
+                        className={cn(
+                          "relative inline-flex h-6 w-11 shrink-0 cursor-pointer items-center rounded-full border transition-colors",
+                          theme === "dark"
+                            ? "border-zinc-700 bg-zinc-900"
+                            : "border-zinc-300 bg-zinc-200"
+                        )}
+                        onClick={(e) => {
+                          e.stopPropagation();
+                          setTheme(theme === "light" ? "dark" : "light");
+                        }}
+                        type="button"
+                      >
+                        {/* Track icons */}
+                        <SunIcon
+                          className={cn(
+                            "absolute left-1 h-3.5 w-3.5 text-amber-500 transition-opacity",
+                            theme === "dark" ? "opacity-0" : "opacity-100"
+                          )}
+                        />
+                        <MoonIcon
+                          className={cn(
+                            "absolute right-1 h-3.5 w-3.5 text-indigo-400 transition-opacity",
+                            theme === "dark" ? "opacity-100" : "opacity-0"
+                          )}
+                        />
+
+                        {/* Knob */}
+                        <span
+                          className={cn(
+                            "pointer-events-none inline-block h-5 w-5 transform rounded-full bg-white shadow transition-transform",
+                            theme === "dark" ? "translate-x-5" : "translate-x-1"
+                          )}
+                        />
+                      </button>
+                    </DropdownMenuItem>
                   </DropdownMenuItem>
                 </DropdownMenuGroup>
               </DropdownMenuContent>
