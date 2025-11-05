@@ -1,5 +1,5 @@
 import { SidebarInset, SidebarRail } from "@repo/ui/components/sidebar";
-import { createFileRoute, Outlet, redirect } from "@tanstack/react-router";
+import { createFileRoute, Outlet } from "@tanstack/react-router";
 import { useAuth } from "@workos/authkit-tanstack-react-start/client";
 import { useEffect } from "react";
 import { Provider as HeaderProvider, HeaderRoot } from "@/components/header";
@@ -13,13 +13,14 @@ export const Route = createFileRoute("/_app")({
 
 function RouteComponent() {
   const { organizationId, loading } = useAuth();
+  const navigate = Route.useNavigate();
 
   useEffect(() => {
     if (loading) {
       return;
     }
     if (organizationId === undefined) {
-      throw redirect({ to: "/switch-organization" });
+      navigate({ to: "/switch-organization" });
     }
   }, [loading, organizationId]);
 
