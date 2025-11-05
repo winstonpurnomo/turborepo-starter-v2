@@ -20,11 +20,6 @@ jobs:
         with:
           persist-credentials: false
 
-      - name: Setup Biome
-        uses: biomejs/setup-biome@v2
-        with:
-          version: latest
-
       - name: Setup Bun
         uses: oven-sh/setup-bun@v2
         with:
@@ -34,7 +29,7 @@ jobs:
         run: bun install
 
       - name: Run biome ci
-        run: NODE_PATH=./node_modules biome ci .
+        run: bunx biome ci .
 
   test-template-generation:
     name: Test Template Generation
