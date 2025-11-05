@@ -1,8 +1,10 @@
 {
   "$schema": "./node_modules/@biomejs/biome/configuration_schema.json",
-  "extends": ["ultracite"],
+  "extends": [
+    "ultracite/core"
+  ],
   "linter": {
-   "rules": {
+    "rules": {
       "recommended": true,
       "suspicious": {
         "noArrayIndexKey": "off",
@@ -16,8 +18,18 @@
           "fix": "safe",
           "level": "error",
           "options": {
-            "attributes": ["className"],
-            "functions": ["clsx", "cva", "tw", "twMerge", "cn", "twJoin", "tv"]
+            "attributes": [
+              "className"
+            ],
+            "functions": [
+              "clsx",
+              "cva",
+              "tw",
+              "twMerge",
+              "cn",
+              "twJoin",
+              "tv"
+            ]
           }
         },
         "useConsistentTypeDefinitions": "off"
@@ -39,7 +51,9 @@
   },
   "overrides": [
     {
-      "includes": ["index.ts"],
+      "includes": [
+        "index.ts"
+      ],
       "linter": {
         "rules": {
           "performance": {
