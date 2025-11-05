@@ -35,6 +35,8 @@ Includes tRPC for end-to-end typesafe API routes.
 
 ## After Creation
 
+Go to the WorkOS dashboard and set up your project. You will need to copy the Client ID and API key from the dashboard. You will have to set up the redirects for your app. You will also have to configure the JWT template to include the `aud` claim with the value of your Client ID.
+
 ```bash
 cd your-project-name
 pnpm install
