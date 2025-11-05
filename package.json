@@ -1,6 +1,6 @@
 {
   "name": "create-turbostart-app",
-  "version": "0.3.0",
+  "version": "0.3.1",
   "type": "module",
   "description": "🚀 Create TurboStart App - A modern monorepo template with pnpm",
   "author": "Winston Purnomo",
