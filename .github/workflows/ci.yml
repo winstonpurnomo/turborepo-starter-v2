@@ -47,7 +47,7 @@ jobs:
               cd "$dir"
 
               echo "Installing dependencies..."
-              pnpm install --frozen-lockfile
+              pnpm install
 
               echo "Running type check..."
               pnpm check-types
