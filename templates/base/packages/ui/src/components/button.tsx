@@ -3,6 +3,12 @@ import { cva, type VariantProps } from "class-variance-authority";
 import * as React from "react";
 
 import { cn } from "@repo/ui/lib/utils";
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipPositioner,
+  TooltipTrigger,
+} from "@repo/ui/components/tooltip";
 
 const buttonVariants = cva(
   "inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-md text-sm font-medium transition-all disabled:pointer-events-none disabled:opacity-50 [&_svg]:pointer-events-none [&_svg:not([class*='size-'])]:size-4 shrink-0 [&_svg]:shrink-0 outline-none focus-visible:border-ring focus-visible:ring-ring/50 focus-visible:ring-[3px] aria-invalid:ring-destructive/20 dark:aria-invalid:ring-destructive/40 aria-invalid:border-destructive",
@@ -41,6 +47,7 @@ interface ButtonProps
   extends React.ComponentProps<"button">,
     VariantProps<typeof buttonVariants> {
   render?: useRender.RenderProp;
+  tooltip?: string | React.ComponentProps<typeof TooltipContent>;
 }
 
 function Button({
@@ -48,16 +55,49 @@ function Button({
   variant,
   size,
   render = <button />,
+  tooltip,
+  disabled,
   ...props
 }: ButtonProps) {
-  return useRender({
+  const button = useRender({
     render,
     props: {
       "data-slot": "button",
       className: cn(buttonVariants({ variant, size, className })),
+      disabled,
       ...props,
     },
   });
+
+  if (!tooltip) {
+    return button;
+  }
+
+  if (typeof tooltip === "string" || React.isValidElement(tooltip)) {
+    tooltip = {
+      children: tooltip,
+    };
+  }
+
+  // When disabled, wrap in a span so tooltip still works (disabled buttons have pointer-events-none)
+  const trigger = disabled ? (
+    <TooltipTrigger render={<span className="inline-flex" />}>
+      {button}
+    </TooltipTrigger>
+  ) : (
+    <TooltipTrigger
+      render={button as React.ReactElement<Record<string, unknown>>}
+    />
+  );
+
+  return (
+    <Tooltip>
+      {trigger}
+      <TooltipPositioner>
+        <TooltipContent {...tooltip} />
+      </TooltipPositioner>
+    </Tooltip>
+  );
 }
 
 export { Button, buttonVariants };
