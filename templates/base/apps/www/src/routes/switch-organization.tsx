@@ -17,7 +17,6 @@ import {
   ItemMedia,
   ItemTitle,
 } from "@repo/ui/components/item";
-import { useToast } from "@repo/ui/hooks/use-toast";
 import { cn } from "@repo/ui/lib/utils";
 import { queryOptions, useSuspenseQuery } from "@tanstack/react-query";
 import { createFileRoute } from "@tanstack/react-router";
@@ -46,22 +45,14 @@ function RouteComponent() {
   const { queryClient } = Route.useRouteContext();
   const { data } = useSuspenseQuery(organizationQueryOptions);
   const { switchToOrganization, organizationId } = useAuth();
-  const toast = useToast();
   const navigate = Route.useNavigate();
   const [dialogOpen, setDialogOpen] = useState(false);
 
   const handleSelectOrganization = (orgId: string) => {
     try {
       switchToOrganization(orgId);
-      toast.add({
-        title: "Switched organization",
-        type: "success",
-      });
     } catch {
-      toast.add({
-        title: "Could not switch organization",
-        type: "error",
-      });
+      console.error("Failed to switch organization");
     }
     navigate({ to: "/" });
   };
