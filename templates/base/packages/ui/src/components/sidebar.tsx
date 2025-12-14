@@ -4,22 +4,22 @@ import { useRender } from "@base-ui/react/use-render"
 import { cva, type VariantProps } from "class-variance-authority"
 
 import { cn } from "@repo/ui/lib/utils"
-import { Button } from "@repo/ui/components/ui/button"
-import { Input } from "@repo/ui/components/ui/input"
-import { Separator } from "@repo/ui/components/ui/separator"
+import { Button } from "@repo/ui/components/button"
+import { Input } from "@repo/ui/components/input"
+import { Separator } from "@repo/ui/components/separator"
 import {
   Sheet,
   SheetContent,
   SheetDescription,
   SheetHeader,
   SheetTitle,
-} from "@repo/ui/components/ui/sheet"
-import { Skeleton } from "@repo/ui/components/ui/skeleton"
+} from "@repo/ui/components/sheet"
+import { Skeleton } from "@repo/ui/components/skeleton"
 import {
   Tooltip,
   TooltipContent,
   TooltipTrigger,
-} from "@repo/ui/components/ui/tooltip"
+} from "@repo/ui/components/tooltip"
 import { useIsMobile } from "@repo/ui/hooks/use-mobile"
 import { PanelLeftIcon } from "lucide-react"
 
