@@ -1,5 +1,4 @@
 import { SidebarProvider } from "@repo/ui/components/sidebar";
-import { ToastProvider } from "@repo/ui/components/toast";
 import appCss from "@repo/ui/styles/globals.css?url";
 import { TanStackDevtools } from "@tanstack/react-devtools";
 import { type QueryClient, QueryClientProvider } from "@tanstack/react-query";
@@ -86,15 +85,13 @@ function RootDocument() {
       <body className="flex h-screen flex-col bg-muted text-foreground">
         <div className="root flex min-h-0 flex-1">
           <ThemeProvider>
-            <ToastProvider timeout={2000}>
-              <AuthKitProvider>
-                <QueryClientProvider client={queryClient}>
-                  <SidebarProvider>
-                    <Outlet />
-                  </SidebarProvider>
-                </QueryClientProvider>
-              </AuthKitProvider>
-            </ToastProvider>
+            <AuthKitProvider>
+              <QueryClientProvider client={queryClient}>
+                <SidebarProvider>
+                  <Outlet />
+                </SidebarProvider>
+              </QueryClientProvider>
+            </AuthKitProvider>
           </ThemeProvider>
 
           <TanStackDevtools
